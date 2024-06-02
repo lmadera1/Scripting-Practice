@@ -7,7 +7,7 @@ public class Camera_Control : MonoBehaviour
     float pitch = 0.0f;
     float yaw = 0.0f;
     float xSpeed = 3f;
-    float ySpeed = 3f;
+    float ySpeed = 2f;
     // Start is called before the first frame update
     void Start()
     {
