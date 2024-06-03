@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
-    float movementSpeed;
-    GameObject camera;
+    private float movementSpeed;
+    private GameObject camera;
 
     // Start is called before the first frame update
     void Start()
