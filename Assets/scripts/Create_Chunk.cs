@@ -6,12 +6,12 @@ using UnityEngine;
 //hard coded to create chunks, aligned with world axes, of size 16x16x16
 public class Create_Chunk : MonoBehaviour
 {
-    Vector3 start = new Vector3(20, 1, 20);
-    Vector3 forward = new Vector3(1, 0, 0);
-    Vector3 up = new Vector3(0, 1, 0);
-    Vector3 right = new Vector3(0, 0, 1);
+    Vector3 start = new Vector3(20f, 1f, 20f);
+    Vector3 forward = new Vector3(1f, 0f, 0f);
+    Vector3 up = new Vector3(0f, 1f, 0f);
+    Vector3 right = new Vector3(0f, 0f, 1f);
     int chunkLength = 16;
-    int blockLength = 1;
+    float blockLength = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class Create_Chunk : MonoBehaviour
         {
             createLayer(start);
             //move start up y axis
-            start += up * blockLength / 2;
+            start += up * blockLength;
         }
     }
 
@@ -40,7 +40,7 @@ public class Create_Chunk : MonoBehaviour
         for (int i = 0; i < chunkLength; i++)
         {
             createRow(start);
-            start += right * blockLength / 2;
+            start += right * blockLength;
         }
     }
 
@@ -56,7 +56,7 @@ public class Create_Chunk : MonoBehaviour
             //set length of cube
             cube.transform.localScale = new Vector3(blockLength, blockLength, blockLength);
             //update pos
-            start += forward * blockLength / 2;
+            start += forward * blockLength;
 
         }
     }
