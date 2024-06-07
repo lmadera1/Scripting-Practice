@@ -2,25 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Create_World : MonoBehaviour
+public class Generate_World : MonoBehaviour
 {
     //parameters
-    private int _worldLength = 10;
-    private int _chunkLength = 5;
+    private int _worldLength = 100;
+    private int _chunkLength = 1;
     private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        grass = GameObject.FindGameObjectWithTag("Grass");
 
         //Generate world around player
-        InitializeWorld(player.transform.position, _worldLength, _chunkLength) ;
+        InitializeWorld(player.transform.position, _worldLength, _chunkLength);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void InitializeWorld(Vector3 pos, int worldLength, int chunkLength)
@@ -34,7 +35,7 @@ public class Create_World : MonoBehaviour
         int max = worldLength / 2;
         int min = -worldLength / 2;
 
-        
+
         for (int i = min; i <= max; i++)
         {
             for (int j = min; j <= max; j++)
@@ -46,7 +47,7 @@ public class Create_World : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     //TODO move to seperate file
@@ -55,49 +56,35 @@ public class Create_World : MonoBehaviour
     private Vector3 up = new Vector3(0f, 1f, 0f);
     private Vector3 right = new Vector3(0f, 0f, 1f);
     private float blockLength = 1f;
+    private GameObject grass;
     void GenerateChunk(Vector3 start, int chunkLength)
     {
         for (int i = 0; i < chunkLength; i++)
         {
-            createLayer(start, chunkLength);
+            GenerateLayer(start, chunkLength);
             //move start up y axis
             start += up * blockLength;
         }
     }
 
     //TODO: move to another file
-    void createLayer(Vector3 start, int chunkLength)
+    void GenerateLayer(Vector3 start, int chunkLength)
     {
         for (int i = 0; i < chunkLength; i++)
         {
-            createRow(start, chunkLength);
+            GenerateRow(start, chunkLength);
             start += right * blockLength;
         }
     }
 
     //TODO: move to another file
-    void createRow(Vector3 start, int chunkLength)
+    void GenerateRow(Vector3 start, int chunkLength)
     {
         for (int i = 0; i < chunkLength; i++)
         {
-            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //update cube position
-            cube.transform.position = start;
-            //update cube orientation
-            cube.transform.forward = forward;
-            //set length of cube
-            cube.transform.localScale = new Vector3(blockLength, blockLength, blockLength);
+            if (start.y > 3 || start.y < 1) continue;
+            GameObject cube = Instantiate(grass, start, Quaternion.identity);
 
-            //TODO: Replace later
-            //deactivate if above a certain height
-            if (start.y > -1)
-            {
-                cube.SetActive(false);
-            }
-            if (start.y < -2)
-            {
-                cube.SetActive(false);
-            }
             //update pos
             start += forward * blockLength;
 
