@@ -6,7 +6,7 @@ using UnityEngine;
 //hard coded to create chunks, aligned with world axes, of size 16x16x16
 public class Create_Chunk : MonoBehaviour
 {
-    Vector3 start = new Vector3(20f, 1f, 20f);
+    Vector3 start = new Vector3(-4f, 0f, -4f);
     Vector3 forward = new Vector3(1f, 0f, 0f);
     Vector3 up = new Vector3(0f, 1f, 0f);
     Vector3 right = new Vector3(0f, 0f, 1f);
@@ -55,6 +55,13 @@ public class Create_Chunk : MonoBehaviour
             cube.transform.forward = forward;
             //set length of cube
             cube.transform.localScale = new Vector3(blockLength, blockLength, blockLength);
+
+            //TODO: Replace later
+            //deactivate if above a certain height
+            if (start.y > 8)
+            {
+                cube.SetActive(false);
+            }
             //update pos
             start += forward * blockLength;
 
