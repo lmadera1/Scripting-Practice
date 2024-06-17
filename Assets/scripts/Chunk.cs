@@ -35,6 +35,7 @@ public class Chunk
     {
         //start from corner of Chunk
         Vector3 start = pos - new Vector3(chunkLength / 2f, 0, chunkLength / 2f);
+
         //Create voxels
         for (int x = 0; x < chunkLength; x++)
         {
@@ -75,6 +76,7 @@ public class Chunk
                 }
             }
         }
+        
     }
 
     private bool IsSurrounded(int x, int y, int z)
@@ -104,18 +106,21 @@ public class Chunk
 
     private void GenerateColumn(Vector3 start, int x, int z)
     {
-        
+        int scaleOne = 30;
+        float scaleTwo = 1/40f;
+        int height = (int) (scaleOne * Mathf.PerlinNoise(start.x * scaleTwo, start.z * scaleTwo));
+
         for (int y = 0; y < buildHeight; y++)
         {
             start.y = y;
-            GameObject cube = GameObject.Instantiate(grass, start, Quaternion.identity);
-            cube.SetActive(false);
 
-            Voxel voxel = new Voxel(cube);
+            Voxel voxel = new Voxel();
             //TODO: change later
-            if (start.y <= 100)
+            if (y <= height)
             {
                 voxel.type = "grass";
+                voxel.cube = GameObject.Instantiate(grass, start, Quaternion.identity);
+                voxel.cube.SetActive(false);
             }
             
             voxels[x, y, z] = voxel;

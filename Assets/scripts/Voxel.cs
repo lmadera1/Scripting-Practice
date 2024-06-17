@@ -6,7 +6,7 @@ public class Voxel
 {
     public string type;
     public GameObject cube;
-    public Voxel(GameObject _cube, string _type = "air")
+    public Voxel(GameObject _cube = null, string _type = "air")
     {
         cube = _cube;
         type = _type;
