@@ -6,10 +6,13 @@ public class Voxel
 {
     public string type;
     public GameObject cube;
-    public Voxel(GameObject _cube = null, string _type = "air")
+    public Vector3 pos;
+    public Voxel(Vector3 _pos, GameObject _cube = null, string _type = "air")
     {
         cube = _cube;
         type = _type;
+        pos = _pos;
+
     }
 
     public void ShowFaces(string[] faces)

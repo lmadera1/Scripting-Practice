@@ -7,7 +7,7 @@ using UnityEngine;
 public class Generate_World : MonoBehaviour
 {
     //parameters
-    private int _worldLength = 5;
+    private int _worldLength = 7;
     private int _chunkLength = 16;
     private int buildHeight = 360;
 

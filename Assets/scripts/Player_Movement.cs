@@ -7,7 +7,7 @@ public class Player_Movement : MonoBehaviour
     //Parameters
     private float movementSpeed = 350f;
     private float jumpForce = 400f;
-    private float airMovementMult = 0.3f;
+    private float airMovementMult = 0.5f;
 
     //store camera and player GameObjects that will move
     private GameObject camera;
@@ -40,7 +40,7 @@ public class Player_Movement : MonoBehaviour
             right *= airMovementMult;
         }
 
-        //makes sure vertical velocity
+        //makes sure vertical velocity remains the same
         forward.y = right.y = rigidbody.velocity.y;
 
         if (Input.GetKey("up"))
@@ -77,6 +77,7 @@ public class Player_Movement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(player.transform.position, -Vector3.up, 1.1f);
+        Vector3 pos = player.transform.position + new Vector3(0, -0.9f, 0);
+        return Physics.Raycast(pos, -Vector3.up, 0.5f);
     }
 }

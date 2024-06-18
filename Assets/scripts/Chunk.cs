@@ -68,6 +68,8 @@ public class Chunk
                     //check if surrounded
                     if (!IsSurrounded(x, y, z))
                     {
+                        voxel.cube = GameObject.Instantiate(grass, voxel.pos, Quaternion.identity);
+
                         voxel.ShowFaces(new string[0]);
                         continue;
                     }
@@ -114,13 +116,11 @@ public class Chunk
         {
             start.y = y;
 
-            Voxel voxel = new Voxel();
+            Voxel voxel = new Voxel(start);
             //TODO: change later
             if (y <= height)
             {
                 voxel.type = "grass";
-                voxel.cube = GameObject.Instantiate(grass, start, Quaternion.identity);
-                voxel.cube.SetActive(false);
             }
             
             voxels[x, y, z] = voxel;
