@@ -8,14 +8,9 @@ public class Camera_Control : MonoBehaviour
     float yaw = 0.0f;
     float xSpeed = 3f;
     float ySpeed = 2f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         yaw += xSpeed * Input.GetAxisRaw("Mouse X");
         pitch -= ySpeed * Input.GetAxisRaw("Mouse Y");

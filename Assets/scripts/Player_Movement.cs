@@ -4,41 +4,79 @@ using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
-    private float movementSpeed;
+    //Parameters
+    private float movementSpeed = 350f;
+    private float jumpForce = 400f;
+    private float airMovementMult = 0.3f;
+
+    //store camera and player GameObjects that will move
     private GameObject camera;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = gameObject;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
-        movementSpeed = 0.1f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 forward = camera.transform.forward * movementSpeed;
-        forward.y = 0;
-        Vector3 right = camera.transform.right * movementSpeed;
-        right.y = 0;
+        Vector3 forward = camera.transform.forward * movementSpeed * Time.fixedDeltaTime;
+        Vector3 right = camera.transform.right * movementSpeed * Time.fixedDeltaTime;
+        
+
+        Rigidbody rigidbody = player.GetComponent<Rigidbody>();
+        
+
+        bool grounded = IsGrounded();
+
+        //slow down movement while in the air
+        if (!grounded)
+        {
+            forward *= airMovementMult;
+            right *= airMovementMult;
+        }
+
+        //makes sure vertical velocity
+        forward.y = right.y = rigidbody.velocity.y;
+
         if (Input.GetKey("up"))
         {
-            gameObject.transform.Translate(forward);
+
+            rigidbody.velocity = forward;
         }
 
         if (Input.GetKey("down"))
         {
-            gameObject.transform.Translate(-forward);
+            rigidbody.velocity = -forward;
         }
 
         if (Input.GetKey("right"))
         {
-            gameObject.transform.Translate(right);
+            rigidbody.velocity = right;
         }
 
         if (Input.GetKey("left"))
         {
-            gameObject.transform.Translate(-right);
+            rigidbody.velocity = -right;
         }
+
+        if (grounded && Input.GetKeyUp("space"))
+        {
+
+            Rigidbody rigidBody = player.GetComponent<Rigidbody>();
+
+            rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(player.transform.position, -Vector3.up, 1.1f);
     }
 }
