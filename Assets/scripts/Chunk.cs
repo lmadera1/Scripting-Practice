@@ -28,6 +28,7 @@ public class Chunk
         buildHeight = _buildHeight;
         grass = GameObject.FindGameObjectWithTag("Grass");
         voxels = new Voxel[chunkLength, buildHeight, chunkLength];
+        
         GenerateChunk();
     }
 

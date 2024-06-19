@@ -8,16 +8,22 @@ public class Player_Movement : MonoBehaviour
     private float movementSpeed = 350f;
     private float jumpForce = 400f;
     private float airMovementMult = 0.5f;
+    private float interactDistance = 5f;
 
-    //store camera and player GameObjects that will move
+    //store camera and player GameObjects
     private GameObject camera;
     private GameObject player;
+
+    //store Highlight GameObject
+    //used to highlight interactable voxels.
+    private GameObject highlight;
 
     // Start is called before the first frame update
     void Start()
     {
         player = gameObject;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
+        highlight = GameObject.FindGameObjectWithTag("Highlight");
 
     }
 
@@ -72,6 +78,16 @@ public class Player_Movement : MonoBehaviour
             rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
+        RaycastHit hit;
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactDistance))
+        {
+            GameObject highlighted = hit.transform.gameObject;
+            highlight.transform.position = highlighted.transform.position;
+            highlight.transform.rotation = highlighted.transform.rotation;
+        } else
+        {
+            highlight.transform.position = new Vector3(-10, -10, -10);
+        }
 
     }
 
